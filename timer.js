@@ -1,10 +1,30 @@
 "uset strict";
 
-let actionTime = 0,
+let intervalActionId,
+	intervalRelaxId
+	actionTime = 0,
 	maxActionTime = 3,
 	repeatCount = 0,
-	maxRepeatCount = 3,
-	intervalActionId;
+	maxRepeatCount = 2,
+	relaxTime = 0,
+	maxRelaxTime = 2
+	isRelaxRunning = false;
+
+
+function handleRepeat(){
+
+	repeatCount += 1;
+
+	if( repeatCount <= maxRepeatCount ){
+		console.log('------');
+		console.log( `${repeatCount}회` );
+		intervalActionId = setInterval( handleActionTime, 1000 );
+	} else {
+		cleanActionTime();
+		repeatCount = 0;
+	}
+
+}
 
 function handleActionTime(){
 
@@ -12,31 +32,41 @@ function handleActionTime(){
 	console.log(actionTime);
 
 	if( actionTime === maxActionTime ){
+
 		cleanActionTime();
 
-		handleRepeat();
+		console.log('[휴식]');
+		isRelaxRunning = true;
+		intervalRelaxId = setInterval( handleRelax, 1000 );
+		
 	}
 }
 
 
-function handleRepeat(){
+function handleRelax(){
+	relaxTime += 1;
+	console.log(relaxTime);
 
-	repeatCount += 1;
-	console.log( 'repeatCount', repeatCount );
-
-	intervalActionId = setInterval( handleActionTime, 1000 );
-
-	if( repeatCount === maxRepeatCount ){
-		cleanActionTime();
-		repeatCount = 0;
+	if( relaxTime === maxRelaxTime ){
+		cleanRelaxTime();
 	}
 }
+
 
 function cleanActionTime(){
 	clearInterval(intervalActionId);
 	actionTime = 0;
 }
 
+function cleanRelaxTime(){
+	isRelaxRunning = false;
+	clearInterval(intervalRelaxId);
+	relaxTime = 0;
 
-intervalActionId = setInterval( handleActionTime, 1000 );
+	handleRepeat();
+}
+
+
+handleRepeat();
+
 
