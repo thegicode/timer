@@ -1,26 +1,42 @@
 "uset strict";
 
+let actionTime = 0,
+	maxActionTime = 3,
+	repeatCount = 0,
+	maxRepeatCount = 3,
+	intervalActionId;
 
-/*const seconds = new Date().getSeconds();;
-console.log(seconds);*/
+function handleActionTime(){
 
-let seconds = 0,
-	maxSeconds = 5,
-	intervalId;
+	actionTime += 1;
+	console.log(actionTime);
 
-function alertSeconds(){
-	seconds += 1;
-	console.log(seconds);
-	if( seconds === maxSeconds ){
-		clean();
+	if( actionTime === maxActionTime ){
+		cleanActionTime();
+
+		handleRepeat();
 	}
 }
 
-function clean(){
-	clearInterval(intervalId);
-	seconds = 0;
-	console.log('Clean');
+
+function handleRepeat(){
+
+	repeatCount += 1;
+	console.log( 'repeatCount', repeatCount );
+
+	intervalActionId = setInterval( handleActionTime, 1000 );
+
+	if( repeatCount === maxRepeatCount ){
+		cleanActionTime();
+		repeatCount = 0;
+	}
 }
 
-intervalId = setInterval( alertSeconds, 1000 );
+function cleanActionTime(){
+	clearInterval(intervalActionId);
+	actionTime = 0;
+}
+
+
+intervalActionId = setInterval( handleActionTime, 1000 );
 
