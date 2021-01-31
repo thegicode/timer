@@ -42,7 +42,6 @@ function handleActionTime(){
 	}
 }
 
-
 function handleRelax(){
 	relaxTime += 1;
 	console.log(relaxTime);
@@ -65,7 +64,6 @@ function cleanRelaxTime(){
 
 	handleRepeat();
 }
-
 
 handleRepeat();
 
