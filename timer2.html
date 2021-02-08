@@ -25,26 +25,37 @@
 			</label>
 			<label>
 				<span class="label">휴식</span>
-				<input type="number" value="2" id="inputRelax">
+				<input type="number" value="2" id="inputRelaxTime">
 			</label>
-			<!-- <label>
+			<label>
 				<span class="label">횟수</span>
-				<input type="number" value="2" id="inputCount">
-			</label> -->
+				<input type="number" value="2" id="inputRepeat">
+			</label>
 		</fieldset>
 
 		<div class="actions">
-			<button type="button" onclick="timer.play()">Start</button>
-			<button type="button" onclick="timer.pause()">Pause</button>
-			<button type="button" onclick="timer.stop()">Stop</button>
+			<button type="button" onclick="handleRepeat.init()">Start</button>
+			<!-- <button type="button" onclick="handleRepeat.pause()">Pause</button> -->
+			<button type="button" onclick="handleRepeat.stop()">Stop</button> 
 		</div>
 	</form>
 
 
-	<label>
-		<span class="label">시간</span>
-		<input type="text" id="displayTime" value="0">
-	</label>
+	<div>
+		<dl>
+			<dt>횟수 :  </dt> 
+			<dd><span id="displayRepeat"></span>회</dd>
+		</dl>
+		<dl>
+			<dt>시간 :  </dt> 
+			<dd><span id="displayTime"></span>초</dd>
+		</dl>
+		<dl>
+			<dt>휴식 :  </dt> 
+			<dd><span id="displayRelaxTime"></span>초</dd>
+		</dl>
+		<p id="displayEnd"></p>
+	</div>
 	
 	<script src="./timer2.js"></script>
 	
