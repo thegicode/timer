@@ -14,18 +14,11 @@ let playId,
 let handleRepeat = {
 	init: function(){
 		displayEnd.textContent = '';
-
-		if(this.isPause){
-			console.log( 'repeatCount', repeatCount);
-			console.log( 'time', time);
-			console.log( 'relaxTime', relaxTime);
+		repeatCount += 1;
+		if( repeatCount <= maxRepeat ){
+			handleRepeat.play();
 		} else {
-			repeatCount += 1;
-			if( repeatCount <= maxRepeat ){
-				handleRepeat.play();
-			} else {
-				handleRepeat.stop(true);
-			}
+			handleRepeat.stop(true);
 		}
 	},
 	play : function(){
