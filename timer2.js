@@ -34,8 +34,6 @@ let handleRepeat = {
 		} else {
 			this.stop(true);
 		}
-		
-		displayRepeat.textContent = repeatCount;
 
 	},
 	play: function(){
@@ -43,6 +41,7 @@ let handleRepeat = {
 		playButton.disabled = true;
 		pauseButton.removeAttribute('disabled');
 		stopButton.removeAttribute('disabled');
+		displayRepeat.textContent = repeatCount;
 
 		if( this.isPause ){
 			let obj = timer.isPause ? timer : relaxTimer;
@@ -59,12 +58,13 @@ let handleRepeat = {
 		timer.stop();
 		relaxTimer.stop();
 
-		repeatCount = '';
+		repeatCount = 0;
+
 		playButton.removeAttribute('disabled');
 		pauseButton.disabled = true;
 		stopButton.disabled = true;
 
-		if(isReset){
+		if( isReset ){
 			displayRepeat.textContent = '';
 			displayTime.textContent = '';
 			displayRelaxTime.textContent = '';
