@@ -1,7 +1,7 @@
 "use strict";
 
 const forms = document.form,
-	maxTime = Number(forms.inputTime.value),
+	maxPlayTime = Number(forms.inputTime.value),
 	maxRelaxTime = Number(forms.inputRelaxTime.value),
 	maxCount = Number(forms.inputRepeat.value),
 	playButton = forms.playButton,
@@ -39,8 +39,8 @@ let handleTimer = {
 	play: function(){
 
 		playButton.disabled = true;
-		pauseButton.removeAttribute('disabled');
-		stopButton.removeAttribute('disabled');
+		pauseButton.disabled = false;
+		stopButton.disabled = false;
 		displayCount.textContent = count;
 
 		if( this.isPause ){
@@ -60,7 +60,7 @@ let handleTimer = {
 
 		count = 0;
 
-		playButton.removeAttribute('disabled');
+		playButton.disabled = false;
 		pauseButton.disabled = true;
 		stopButton.disabled = true;
 
@@ -72,13 +72,13 @@ let handleTimer = {
 	},
 	pause: function(){
 		let obj = timer;
-		if( relaxTimer > 0 ){
+		if( playTime === maxPlayTime || relaxTime > 0 ){
 			obj = relaxTimer;
 		}
 		obj.pause();
 		this.isPause = true;
 
-		playButton.removeAttribute('disabled');
+		playButton.disabled = false;
 		pauseButton.disabled = true;
 		
 	}
@@ -95,7 +95,7 @@ let timer = {
 
 		displayPlayTime.textContent = playTime;
 
-		if( playTime === maxTime ){
+		if( playTime === maxPlayTime ){
 			this.stop();
 			relaxTimer.run();
 		}
