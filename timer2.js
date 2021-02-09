@@ -26,14 +26,14 @@ let handleTimer = {
 
 		count += 1;
 
-		displayPlayTime.textContent = '';
-		displayRelaxTime.textContent = '';
-
 		if( count <= maxCount ){
 			this.play();
 		} else {
 			this.stop(true);
 		}
+
+		displayPlayTime.textContent = '';
+		displayRelaxTime.textContent = '';
 
 	},
 	play: function(){
@@ -77,6 +77,7 @@ let handleTimer = {
 		}
 		obj.pause();
 		this.isPause = true;
+
 		playButton.removeAttribute('disabled');
 		pauseButton.disabled = true;
 		
@@ -91,6 +92,7 @@ let timer = {
 	},
 	tick: function(){
 		playTime += 1;
+
 		displayPlayTime.textContent = playTime;
 
 		if( playTime === maxTime ){
@@ -132,3 +134,6 @@ let relaxTimer = {
 		this.isPause = true;
 	}
 };
+
+
+
