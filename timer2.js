@@ -44,9 +44,8 @@ let handleTimer = {
 		displayCount.textContent = count;
 
 		if( this.isPause ){
-			let obj = timer.isPause ? timer : relaxTimer;
+			let obj = !timer.isPlaying ? relaxTimer : timer;
 			obj.run();
-			obj.isPause = false;
 			this.isPause = false;
 			return;
 		} 
@@ -71,10 +70,7 @@ let handleTimer = {
 		}
 	},
 	pause: function(){
-		let obj = timer;
-		if( playTime === maxPlayTime || relaxTime > 0 ){
-			obj = relaxTimer;
-		}
+		let obj = timer.isPlaying ? timer : relaxTimer;
 		obj.pause();
 		this.isPause = true;
 
@@ -86,9 +82,10 @@ let handleTimer = {
 
 
 let timer = {
-	isPause: false,
+	isPlaying: false,
 	run: function(){
 		playId = setInterval( this.tick.bind(this), 1000 );
+		this.isPlaying = true;
 	},
 	tick: function(){
 		playTime += 1;
@@ -103,18 +100,19 @@ let timer = {
 	stop: function(){
 		clearInterval(playId);
 		playTime = 0;
+		this.isPlaying = false;
 	},
 	pause: function(){
 		clearInterval(playId);
-		this.isPause = true;
 	}
 };
 
 
 let relaxTimer = {
-	isPause: false,
+	isPlaying: false,
 	run: function(){
 		relaxId = setInterval( this.tick.bind(this), 1000 );
+		this.isPlaying = true;
 	},
 	tick: function(){
 		relaxTime += 1;
@@ -128,10 +126,10 @@ let relaxTimer = {
 	stop: function(){
 		clearInterval(relaxId);
 		relaxTime = 0;
+		this.isPlaying = false;
 	},
 	pause: function(){
 		clearInterval(relaxId);
-		this.isPause = true;
 	}
 };
 
