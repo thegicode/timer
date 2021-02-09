@@ -1,10 +1,10 @@
 "use strict";
 
-let forms = document.form,
+const forms = document.form,
 	maxTime = Number(forms.inputTime.value),
 	maxRelaxTime = Number(forms.inputRelaxTime.value),
 	maxRepeatCount = Number(forms.inputRepeat.value),
-	startButton = forms.startButton,
+	playButton = forms.playButton,
 	pauseButton = forms.pauseButton,
 	stopButton = forms.stopButton;
 
@@ -26,7 +26,6 @@ let handleRepeat = {
 
 		repeatCount += 1;
 
-		displayEnd.textContent = '';
 		displayTime.textContent = '';
 		displayRelaxTime.textContent = '';
 
@@ -41,7 +40,7 @@ let handleRepeat = {
 	},
 	play: function(){
 
-		startButton.disabled = true;
+		playButton.disabled = true;
 		pauseButton.removeAttribute('disabled');
 		stopButton.removeAttribute('disabled');
 
@@ -56,24 +55,26 @@ let handleRepeat = {
 		timer.run();
 		
 	},
-	stop: function( isEnd ){
+	stop: function( isReset ){
 		timer.stop();
 		relaxTimer.stop();
 
 		repeatCount = '';
-		startButton.removeAttribute('disabled');
+		playButton.removeAttribute('disabled');
 		pauseButton.disabled = true;
 		stopButton.disabled = true;
-		
-		if(isEnd){
-			displayEnd.textContent = 'End';
+
+		if(isReset){
+			displayRepeat.textContent = '';
+			displayTime.textContent = '';
+			displayRelaxTime.textContent = '';
 		}
 	},
 	pause: function(){
 		let obj = tickTime > 0 ? timer : relaxTimer;
 		obj.pause();
 		this.isPause = true;
-		startButton.removeAttribute('disabled');
+		playButton.removeAttribute('disabled');
 		pauseButton.disabled = true;
 		
 	}
