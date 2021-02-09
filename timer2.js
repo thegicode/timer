@@ -44,7 +44,7 @@ let handleTimer = {
 		displayCount.textContent = count;
 
 		if( this.isPause ){
-			let obj = !timer.isPlaying ? relaxTimer : timer;
+			let obj = timer.isPlaying ? timer : relaxTimer;
 			obj.run();
 			this.isPause = false;
 			return;
