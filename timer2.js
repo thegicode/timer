@@ -99,9 +99,6 @@ let timer = {
 		clearInterval(tickId);
 		tickTime = 0;
 	},
-	isPlaying: function(){
-		return tickTime === 0 ? false : true;
-	},
 	pause: function(){
 		clearInterval(tickId);
 		this.isPause = true;
@@ -126,9 +123,6 @@ let relaxTimer = {
 	stop: function(){
 		clearInterval(relaxId);
 		relaxTime = 0;
-	},
-	isPlaying: function(){
-		return relaxTime === 0 ? false : true;
 	},
 	pause: function(){
 		clearInterval(relaxId);
