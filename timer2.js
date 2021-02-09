@@ -1,81 +1,123 @@
 "use strict";
 
-let maxTime = Number(inputTime.value),
-	maxRelaxTime = Number(inputRelaxTime.value),
-	maxRepeat = Number(inputRepeat.value);
+let forms = document.form,
+	maxTime = Number(forms.inputTime.value),
+	maxRelaxTime = Number(forms.inputRelaxTime.value),
+	maxRepeatCount = Number(forms.inputRepeat.value),
+	startButton = forms.startButton,
+	pauseButton = forms.pauseButton,
+	stopButton = forms.stopButton;
 
-let playId, 
+let tickId, 
 	relaxId,
-	time = 0,
-	relaxTime = 0,
-	repeatCount = 0;
+	repeatCount = 0,
+	tickTime = 0,
+	relaxTime = 0;
 
 
 let handleRepeat = {
+	isPause: false,
 	init: function(){
-		displayEnd.textContent = '';
+
+		if( this.isPause ){
+			this.play();
+			return;
+		} 
+
 		repeatCount += 1;
-		if( repeatCount <= maxRepeat ){
-			handleRepeat.play();
+
+		displayEnd.textContent = '';
+		displayTime.textContent = '';
+		displayRelaxTime.textContent = '';
+
+		if( repeatCount <= maxRepeatCount ){
+			this.play();
 		} else {
-			handleRepeat.stop(true);
+			this.stop(true);
 		}
-	},
-	play : function(){
+		
 		displayRepeat.textContent = repeatCount;
-		displayTime.textContent = 0;
-		displayRelaxTime.textContent = 0;
-		timer.interval();
+
 	},
-	stop : function( isEnd ){
+	play: function(){
+
+		startButton.disabled = true;
+		pauseButton.removeAttribute('disabled');
+		stopButton.removeAttribute('disabled');
+
+		if( this.isPause ){
+			let obj = timer.isPause ? timer : relaxTimer;
+			obj.run();
+			obj.isPause = false;
+			this.isPause = false;
+			return;
+		} 
+
+		timer.run();
+		
+	},
+	stop: function( isEnd ){
 		timer.stop();
 		relaxTimer.stop();
-		repeatCount = 0;
-		displayRepeat.textContent = repeatCount;
-		displayTime.textContent = 0;
-		displayRelaxTime.textContent = 0;
+
+		repeatCount = '';
+		startButton.removeAttribute('disabled');
+		pauseButton.disabled = true;
+		stopButton.disabled = true;
+		
 		if(isEnd){
 			displayEnd.textContent = 'End';
 		}
+	},
+	pause: function(){
+		let obj = tickTime > 0 ? timer : relaxTimer;
+		obj.pause();
+		this.isPause = true;
+		startButton.removeAttribute('disabled');
+		pauseButton.disabled = true;
+		
 	}
-}
+};
 
 
 let timer = {
-	interval: function(){
-		playId = setInterval( this.play.bind(this), 1000 );
+	isPause: false,
+	run: function(){
+		tickId = setInterval( this.tick.bind(this), 1000 );
 	},
-	play: function(){
-		time += 1;
-		displayTime.textContent = time;
+	tick: function(){
+		tickTime += 1;
+		displayTime.textContent = tickTime;
 
-		if( time === maxTime ){
+		if( tickTime === maxTime ){
 			this.stop();
-			relaxTimer.interval();
+			relaxTimer.run();
 		}
 	},
 	stop: function(){
-		clearInterval(playId);
-		time = 0;
+		clearInterval(tickId);
+		tickTime = 0;
 	},
 	isPlaying: function(){
-		return time === 0 ? false : true;
+		return tickTime === 0 ? false : true;
 	},
 	pause: function(){
-		clearInterval(playId);
+		clearInterval(tickId);
+		this.isPause = true;
 	}
 };
 
 
 let relaxTimer = {
-	interval: function(){
-		relaxId = setInterval( this.play.bind(this), 1000 );
+	isPause: false,
+	run: function(){
+		relaxId = setInterval( this.tick.bind(this), 1000 );
 	},
-	play: function(){
+	tick: function(){
 		relaxTime += 1;
 		displayRelaxTime.textContent = relaxTime;
 
-		if( relaxTime === maxRelaxTime ){
+		if( relaxTime === maxRelaxTime+1 ){
 			this.stop();
 			handleRepeat.init();
 		}
@@ -83,12 +125,12 @@ let relaxTimer = {
 	stop: function(){
 		clearInterval(relaxId);
 		relaxTime = 0;
-
 	},
 	isPlaying: function(){
 		return relaxTime === 0 ? false : true;
 	},
 	pause: function(){
 		clearInterval(relaxId);
+		this.isPause = true;
 	}
 };

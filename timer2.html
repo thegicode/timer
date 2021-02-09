@@ -5,6 +5,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>timer2</title>
 	<style>
+		h1{
+			border-bottom: solid 1px #ddd;
+		}
+		form{
+			padding: 1rem;
+		}
+		fieldset{
+			border: none 0;
+		}
+		fieldset input{
+			width: 50px;
+			margin: 0 3px 0 15px;
+		}
 		label{
 			display: block;
 			margin: 0.5rem;
@@ -12,47 +25,78 @@
 		.actions{
 			margin-top: 1rem;
 			margin-bottom: 1rem;
+			text-align: right;
+		}
+
+		.display{
+			padding: 1rem;
+			background: #f8f8f8;
+		}
+		.display dl{
+			display: flex;
+		}
+		.display dd{
+			text-align: right;
+		}
+		.display .value{
+			display: inline-block;
+			width: 50px;
+			margin-right: 5px;
 		}
 	</style>
 </head>
 <body>
 
+	<h1>타이머</h1>
+
 	<form name="form">
 		<fieldset>
 			<label>
-				<span class="label">초</span>
-				<input type="number" value="3" id="inputTime">
+				<span class="label">운동</span>
+				<input type="number" name="inputTime" value="3">
+				<span class="unit">초</span>
 			</label>
 			<label>
 				<span class="label">휴식</span>
-				<input type="number" value="2" id="inputRelaxTime">
+				<input type="number" name="inputRelaxTime" value="3">
+				<span class="unit">초</span>
 			</label>
 			<label>
-				<span class="label">횟수</span>
-				<input type="number" value="2" id="inputRepeat">
+				<span class="label">반복</span>
+				<input type="number" name="inputRepeat" value="2">
+				<span class="unit">횟수</span>
 			</label>
 		</fieldset>
 
 		<div class="actions">
-			<button type="button" onclick="handleRepeat.init()">Start</button>
-			<!-- <button type="button" onclick="handleRepeat.pause()">Pause</button> -->
-			<button type="button" onclick="handleRepeat.stop()">Stop</button> 
+			<button type="button" name="startButton" onclick="handleRepeat.init()">Start</button>
+			<button type="button" name="pauseButton" onclick="handleRepeat.pause()" disabled>Pause</button>
+			<button type="button" name="stopButton" onclick="handleRepeat.stop()" disabled>Stop</button> 
 		</div>
 	</form>
 
 
-	<div>
+	<div class="display">
 		<dl>
-			<dt>횟수 :  </dt> 
-			<dd><span id="displayRepeat"></span>회</dd>
+			<dt>횟수 :</dt> 
+			<dd>
+				<span class="value" id="displayRepeat"></span>
+				<span class="unit">회</span>
+			</dd>
 		</dl>
 		<dl>
-			<dt>시간 :  </dt> 
-			<dd><span id="displayTime"></span>초</dd>
+			<dt>시간 :</dt> 
+			<dd>
+				<span class="value" id="displayTime"></span>
+				<span class="unit">초</span>
+			</dd>
 		</dl>
 		<dl>
-			<dt>휴식 :  </dt> 
-			<dd><span id="displayRelaxTime"></span>초</dd>
+			<dt>휴식 :</dt> 
+			<dd>
+				<span class="value" id="displayRelaxTime"></span>
+				<span class="unit">초</span>
+			</dd>
 		</dl>
 		<p id="displayEnd"></p>
 	</div>
