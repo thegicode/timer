@@ -69,9 +69,9 @@
 		</fieldset>
 
 		<div class="actions">
-			<button type="button" name="playButton" onclick="handleRepeat.init()">Play</button>
-			<button type="button" name="pauseButton" onclick="handleRepeat.pause()" disabled>Pause</button>
-			<button type="button" name="stopButton" onclick="handleRepeat.stop( true )" disabled>Stop</button> 
+			<button type="button" name="playButton" onclick="handleTimer.init()">Play</button>
+			<button type="button" name="pauseButton" onclick="handleTimer.pause()" disabled>Pause</button>
+			<button type="button" name="stopButton" onclick="handleTimer.stop( true )" disabled>Stop</button> 
 		</div>
 	</form>
 
@@ -80,14 +80,14 @@
 		<dl>
 			<dt>횟수 :</dt> 
 			<dd>
-				<span class="value" id="displayRepeat"></span>
+				<span class="value" id="displayCount"></span>
 				<span class="unit">회</span>
 			</dd>
 		</dl>
 		<dl>
 			<dt>시간 :</dt> 
 			<dd>
-				<span class="value" id="displayTime"></span>
+				<span class="value" id="displayPlayTime"></span>
 				<span class="unit">초</span>
 			</dd>
 		</dl>
@@ -98,7 +98,6 @@
 				<span class="unit">초</span>
 			</dd>
 		</dl>
-		<p id="displayEnd"></p>
 	</div>
 	
 	<script src="./timer2.js"></script>

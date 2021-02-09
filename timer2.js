@@ -3,19 +3,19 @@
 const forms = document.form,
 	maxTime = Number(forms.inputTime.value),
 	maxRelaxTime = Number(forms.inputRelaxTime.value),
-	maxRepeatCount = Number(forms.inputRepeat.value),
+	maxCount = Number(forms.inputRepeat.value),
 	playButton = forms.playButton,
 	pauseButton = forms.pauseButton,
 	stopButton = forms.stopButton;
 
-let tickId, 
+let playId, 
 	relaxId,
-	repeatCount = 0,
-	tickTime = 0,
+	count = 0,
+	playTime = 0,
 	relaxTime = 0;
 
 
-let handleRepeat = {
+let handleTimer = {
 	isPause: false,
 	init: function(){
 
@@ -24,12 +24,12 @@ let handleRepeat = {
 			return;
 		} 
 
-		repeatCount += 1;
+		count += 1;
 
-		displayTime.textContent = '';
+		displayPlayTime.textContent = '';
 		displayRelaxTime.textContent = '';
 
-		if( repeatCount <= maxRepeatCount ){
+		if( count <= maxCount ){
 			this.play();
 		} else {
 			this.stop(true);
@@ -41,7 +41,7 @@ let handleRepeat = {
 		playButton.disabled = true;
 		pauseButton.removeAttribute('disabled');
 		stopButton.removeAttribute('disabled');
-		displayRepeat.textContent = repeatCount;
+		displayCount.textContent = count;
 
 		if( this.isPause ){
 			let obj = timer.isPause ? timer : relaxTimer;
@@ -58,20 +58,23 @@ let handleRepeat = {
 		timer.stop();
 		relaxTimer.stop();
 
-		repeatCount = 0;
+		count = 0;
 
 		playButton.removeAttribute('disabled');
 		pauseButton.disabled = true;
 		stopButton.disabled = true;
 
 		if( isReset ){
-			displayRepeat.textContent = '';
-			displayTime.textContent = '';
+			displayCount.textContent = '';
+			displayPlayTime.textContent = '';
 			displayRelaxTime.textContent = '';
 		}
 	},
 	pause: function(){
-		let obj = tickTime > 0 ? timer : relaxTimer;
+		let obj = timer;
+		if( relaxTimer > 0 ){
+			obj = relaxTimer;
+		}
 		obj.pause();
 		this.isPause = true;
 		playButton.removeAttribute('disabled');
@@ -84,23 +87,23 @@ let handleRepeat = {
 let timer = {
 	isPause: false,
 	run: function(){
-		tickId = setInterval( this.tick.bind(this), 1000 );
+		playId = setInterval( this.tick.bind(this), 1000 );
 	},
 	tick: function(){
-		tickTime += 1;
-		displayTime.textContent = tickTime;
+		playTime += 1;
+		displayPlayTime.textContent = playTime;
 
-		if( tickTime === maxTime ){
+		if( playTime === maxTime ){
 			this.stop();
 			relaxTimer.run();
 		}
 	},
 	stop: function(){
-		clearInterval(tickId);
-		tickTime = 0;
+		clearInterval(playId);
+		playTime = 0;
 	},
 	pause: function(){
-		clearInterval(tickId);
+		clearInterval(playId);
 		this.isPause = true;
 	}
 };
@@ -117,7 +120,7 @@ let relaxTimer = {
 
 		if( relaxTime === maxRelaxTime+1 ){
 			this.stop();
-			handleRepeat.init();
+			handleTimer.init();
 		}
 	},
 	stop: function(){
