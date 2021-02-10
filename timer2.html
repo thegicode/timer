@@ -35,6 +35,9 @@
 		.display dl{
 			display: flex;
 		}
+		.display dt{
+			width: 70px;
+		}
 		.display dd{
 			text-align: right;
 		}
@@ -42,6 +45,9 @@
 			display: inline-block;
 			width: 50px;
 			margin-right: 5px;
+		}
+		*[hidden]{
+			display: none;
 		}
 	</style>
 </head>
@@ -52,24 +58,24 @@
 	<form name="form">
 		<fieldset>
 			<label>
+				<span class="label">라운드</span>
+				<input type="number" name="inputCircuit" value="2">
+				<span class="unit"></span>
+			</label>
+			<label>
 				<span class="label">운동</span>
-				<input type="number" name="inputTime" value="3">
+				<input type="number" name="inputWorkTime" value="5">
 				<span class="unit">초</span>
 			</label>
 			<label>
 				<span class="label">휴식</span>
-				<input type="number" name="inputRelaxTime" value="3">
+				<input type="number" name="inputRelaxTime" value="2">
 				<span class="unit">초</span>
-			</label>
-			<label>
-				<span class="label">반복</span>
-				<input type="number" name="inputRepeat" value="2">
-				<span class="unit">횟수</span>
 			</label>
 		</fieldset>
 
 		<div class="actions">
-			<button type="button" name="playButton" onclick="handleTimer.init()">Play</button>
+			<button type="button" name="playButton" onclick="handleTimer.init()">Go</button>
 			<button type="button" name="pauseButton" onclick="handleTimer.pause()" disabled>Pause</button>
 			<button type="button" name="stopButton" onclick="handleTimer.stop( true )" disabled>Stop</button> 
 		</div>
@@ -78,16 +84,16 @@
 
 	<div class="display">
 		<dl>
-			<dt>횟수 :</dt> 
+			<dt>라운드 :</dt> 
 			<dd>
-				<span class="value" id="displayCount"></span>
+				<span class="value" id="displayCircuit"></span>
 				<span class="unit">회</span>
 			</dd>
 		</dl>
 		<dl>
-			<dt>시간 :</dt> 
+			<dt>운동 :</dt> 
 			<dd>
-				<span class="value" id="displayPlayTime"></span>
+				<span class="value" id="displayWorkTime"></span>
 				<span class="unit">초</span>
 			</dd>
 		</dl>

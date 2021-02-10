@@ -1,21 +1,15 @@
 "use strict";
 
 const forms = document.form,
-	maxPlayTime = Number(forms.inputTime.value),
+	maxCircuit = Number(forms.inputCircuit.value),
+	maxWorkTime = Number(forms.inputWorkTime.value),
 	maxRelaxTime = Number(forms.inputRelaxTime.value),
-	maxCount = Number(forms.inputRepeat.value),
 	playButton = forms.playButton,
 	pauseButton = forms.pauseButton,
 	stopButton = forms.stopButton;
 
-let playId, 
-	relaxId,
-	count = 0,
-	playTime = 0,
-	relaxTime = 0;
-
-
 let handleTimer = {
+	circuit: 0,
 	isPause: false,
 	init: function(){
 
@@ -24,15 +18,15 @@ let handleTimer = {
 			return;
 		} 
 
-		count += 1;
+		this.circuit += 1;
 
-		if( count <= maxCount ){
+		if( this.circuit <= maxCircuit ){
 			this.play();
 		} else {
 			this.stop(true);
 		}
 
-		displayPlayTime.textContent = '';
+		displayWorkTime.textContent = '';
 		displayRelaxTime.textContent = '';
 
 	},
@@ -41,36 +35,36 @@ let handleTimer = {
 		playButton.disabled = true;
 		pauseButton.disabled = false;
 		stopButton.disabled = false;
-		displayCount.textContent = count;
+		displayCircuit.textContent = this.circuit;
 
 		if( this.isPause ){
-			let obj = timer.isPlaying ? timer : relaxTimer;
+			let obj = workTimer.isPlaying ? workTimer : relaxTimer;
 			obj.run();
 			this.isPause = false;
 			return;
 		} 
 
-		timer.run();
+		workTimer.run();
 		
 	},
 	stop: function( isReset ){
-		timer.stop();
+		workTimer.stop();
 		relaxTimer.stop();
 
-		count = 0;
+		this.circuit = 0;
 
 		playButton.disabled = false;
 		pauseButton.disabled = true;
 		stopButton.disabled = true;
 
 		if( isReset ){
-			displayCount.textContent = '';
-			displayPlayTime.textContent = '';
+			displayCircuit.textContent = '';
+			displayWorkTime.textContent = '';
 			displayRelaxTime.textContent = '';
 		}
 	},
 	pause: function(){
-		let obj = timer.isPlaying ? timer : relaxTimer;
+		let obj = workTimer.isPlaying ? workTimer : relaxTimer;
 		obj.pause();
 		this.isPause = true;
 
@@ -81,55 +75,60 @@ let handleTimer = {
 };
 
 
-let timer = {
+let workTimer = {
+	intervalId: '',
 	isPlaying: false,
+	time: 0,
 	run: function(){
-		playId = setInterval( this.tick.bind(this), 1000 );
+		this.intervalId = setInterval( this.tick.bind(this), 1000 );
 		this.isPlaying = true;
 	},
 	tick: function(){
-		playTime += 1;
+		this.time += 1;
 
-		displayPlayTime.textContent = playTime;
+		displayWorkTime.textContent = this.time;
 
-		if( playTime === maxPlayTime ){
+		if( this.time === maxWorkTime ){
 			this.stop();
 			relaxTimer.run();
 		}
 	},
 	stop: function(){
-		clearInterval(playId);
-		playTime = 0;
+		clearInterval(this.intervalId);
+		this.time = 0;
 		this.isPlaying = false;
 	},
 	pause: function(){
-		clearInterval(playId);
+		clearInterval(this.intervalId);
 	}
 };
 
 
 let relaxTimer = {
+	intervalId: '',
 	isPlaying: false,
+	time: 0,
 	run: function(){
-		relaxId = setInterval( this.tick.bind(this), 1000 );
+		this.intervalId = setInterval( this.tick.bind(this), 1000 );
 		this.isPlaying = true;
 	},
 	tick: function(){
-		relaxTime += 1;
-		displayRelaxTime.textContent = relaxTime;
+		this.time += 1;
 
-		if( relaxTime === maxRelaxTime+1 ){
+		displayRelaxTime.textContent = this.time;
+
+		if( this.time === maxRelaxTime+1 ){
 			this.stop();
 			handleTimer.init();
 		}
 	},
 	stop: function(){
-		clearInterval(relaxId);
-		relaxTime = 0;
+		clearInterval(this.intervalId);
+		this.time = 0;
 		this.isPlaying = false;
 	},
 	pause: function(){
-		clearInterval(relaxId);
+		clearInterval(this.intervalId);
 	}
 };
 
