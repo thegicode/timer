@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>timer3</title>
+  	<link rel="stylesheet" type="text/css" href="./timer3.css" />
+</head>
+<body>
+
+	<h1>Interval Timer</h1>
+
+	<div id="display" class="display" data-role="work" hidden>
+		<div class="display-circuit" data-hidden="true" id="displayCircuit">
+			<span class="__value" id="displayCircuitValue"></span>
+			<span class="__bar"> / </span>
+			<span class="__value" id="displayMaxCircuit"></span>
+		</div>
+		<div class="display-play">
+			<p class="__name" id="displayTimeTitle"></p>
+			<div class="display-circle">
+				<p class="__value" id="displayWorkTime"></p>
+				<!-- <p class="__value" id="displayRelaxTime"></p> -->
+			</div>
+		</div>
+		<div class="display-actions">
+			<button type="button" id="playButton" onclick="handleTimer.init()" hidden>Play</button>
+			<button type="button" id="pauseButton" onclick="handleTimer.pause()">Pause</button>
+			<button type="button" id="stopButton" onclick="handleTimer.stop(true)">Stop</button> 
+		</div>
+	</div>
+
+	<form name="form" class="form">
+		<div class="form-inputs">
+			<label>
+				<span class="__title">Circuit</span>
+				<input type="number" name="inputCircuit">
+				<span class="__unit">회</span>
+			</label>
+			<label>
+				<span class="__title">운동</span>
+				<input type="number" name="inputWorkTime">
+				<span class="__unit">초</span>
+			</label>
+			<label>
+				<span class="__title">휴식</span>
+				<input type="number" name="inputRelaxTime">
+				<span class="__unit">초</span>
+			</label>
+		</div>
+		<div class="form-actions">
+			<button type="button" name="startButton" onclick="handleTimer.init()">Start</button>
+		</div>
+	</form>
+	
+	<script src="./timer3.js"></script>
+	
+</body>
+</html>
