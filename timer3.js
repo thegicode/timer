@@ -74,6 +74,7 @@ let handleTimer = {
 		this.circuit = 0;
 
 		startButton.hidden = false;
+		playButton.hidden = true;
 		pauseButton.hidden = true;
 		stopButton.hidden = true;
 
