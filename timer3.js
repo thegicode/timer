@@ -148,7 +148,7 @@ let relaxTimer = {
 
 		// displayWorkTime.textContent = '';
 		// displayRelaxTime.textContent = this.time;
-		displayWorkTime.textContent = this.time;
+		displayWorkTime.textContent = maxRelaxTime - this.time + 1;
 		displayTimeTitle.textContent = '휴식';
 		display.dataset.role="relax";
 
