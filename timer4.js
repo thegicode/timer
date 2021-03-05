@@ -17,12 +17,13 @@ let maxCircuit = 0,
 const handleTimer = {
 	circuit: 0,
 	isPause: false,
+	isPlaying: false,
 	init: function(){
 
-		if( !this.validation() ){
+		if( !this.isPlaying && !this.validation() ){
 			return;
 		}
-		
+
 		display.hidden = false;
 
 		if( this.isPause ){
@@ -70,6 +71,8 @@ const handleTimer = {
 		} 
 
 		workTimer.run();
+
+		this.isPlaying = true;
 	},
 	stop: function( isReset ){
 		workTimer.stop();
@@ -80,6 +83,8 @@ const handleTimer = {
 		playButton.hidden = false;
 		pauseButton.hidden = true;
 		stopButton.hidden = true;
+
+		this.isPlaying = false;
 
 		if( isReset ){
 			displayCircuit.dataset.hidden = true;
@@ -97,9 +102,11 @@ const handleTimer = {
 
 		playButton.hidden = false;
 		pauseButton.hidden = true;
+
+		// this.isPlaying = true;
+
 	}
 };
-
 
 const workTimer = {
 	intervalId: '',
@@ -145,18 +152,18 @@ const relaxTimer = {
 		this.isPlaying = true;
 	},
 	tick: function(){
+		this.time += 1;
 		// displayWorkTime.textContent = '';
 		// displayRelaxTime.textContent = this.time;
-		displayWorkTime.textContent = maxRelaxTime - this.time;
+		displayWorkTime.textContent = maxRelaxTime - this.time + 1;
 		displayTimeTitle.textContent = '휴식';
 		display.dataset.role="relax";
 
-		if( this.time === maxRelaxTime || handleTimer.circuit === maxCircuit ){
+		if( this.time === maxRelaxTime + 1 || handleTimer.circuit === maxCircuit ){
 			this.stop();
 			handleTimer.init();
 		}
 
-		this.time += 1;
 	},
 	stop: function(){
 		clearInterval(this.intervalId);
