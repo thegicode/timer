@@ -1,10 +1,11 @@
 # timer
 
 ## 화면
-    - 설정
-    - play
+* 설정
+* Display
 
 ## To do
-    - requestAnimationFrame
-    - eslint
-    - compress(html, css, js)
+* Display animation
+* requestAnimationFrame
+* eslint
+* compress(html, css, js)
