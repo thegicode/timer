@@ -5,7 +5,7 @@
 * Display
 
 ## To do
-* Display animation
+* Display animation : sample circle.html
 * requestAnimationFrame
 * eslint
 * compress(html, css, js)
