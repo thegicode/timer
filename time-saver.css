@@ -1,0 +1,55 @@
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+    margin: 0;
+    background-color: #2d6522;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.root {
+    max-width: 500px;
+    width: 70%;
+    margin: 2rem auto;
+    padding:  2rem;
+
+    border-radius: 10px;
+    border: 1px dashed rgba(255, 255, 255, 0.5);
+    text-align: center;
+}
+.log {
+    font-size: 5rem;
+    color: #feffa1;
+}
+
+.actions {
+    display: flex;
+}
+
+.actions button {
+    flex:  1;
+    margin: 5px;
+    padding:  1rem;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 1rem;
+    color:  rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+}
+
+.actions button:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+    color:  rgba(255, 255, 255, 0.9);
+}
+
+
+
+
+
