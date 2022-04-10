@@ -2,7 +2,7 @@
 
 const time = {
     init: 0,
-    current:0,
+    current: 0,
     pause: 0,
     timerId: ''
 }
@@ -19,7 +19,7 @@ const play = () => {
         // 초(second) 단위 변환하기
         time.current = time.pause + Number(Math.floor(diff / 1000))
 
-        $log.textContent = `${time.current}`
+        $log.textContent = `${getDisplayStr(time.current)}`
     }, 1000) 
 }
 
@@ -27,7 +27,6 @@ const play = () => {
 const pause = () => {
     clearInterval(time.timerId)
     time.pause = time.current
-    $log.textContent = `${time.pause}`
     localStorage.setItem('time-saver', time.pause)
 }
 
@@ -36,6 +35,19 @@ const reset = () => {
     clearInterval(time.timerId)
     time.pause = 0
     $log.textContent = 0
+}
+
+const getDisplayStr = (seconds) => {
+    const d = Number(seconds)
+    const h = Math.floor(d / 3600)
+    const m = Math.floor(d % 3600 / 60)
+    const s = Math.floor(d % 3600 % 60)
+
+    const hDisplay = h > 0 ? `${h}시간` : '';
+    const mDisplay = m > 0 ? `${m}분` : '';
+    const sDisplay = s > 0 ? `${s}초` : '';
+
+    return `${hDisplay} ${mDisplay} ${sDisplay}`
 }
 
 
